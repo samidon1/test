@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "02fc05e8-a096-4b68-8925-d9cf3d56d871",
+		"name": "Cisco-SD-WAN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1.Authentication",
+			"item": [
+				{
+					"name": "Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddd64a1a-1a3d-47aa-b75a-5892366fbe66",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "j_username",
+									"value": "{{j_username}}",
+									"type": "text"
+								},
+								{
+									"key": "j_password",
+									"value": "{{j_password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/j_security_check",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"j_security_check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fed2832-f459-4532-ad55-1f8a7946fa81",
+								"exec": [
+									"var XSRFToken = pm.response.text()",
+									"pm.environment.set(\"X-XSRF-TOKEN\", XSRFToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "j_username",
+									"value": "{{j_username}}",
+									"type": "text"
+								},
+								{
+									"key": "j_password",
+									"value": "{{j_password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/dataservice/client/token",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"dataservice",
+								"client",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "2. SD-WAN Fabric Devices",
+			"item": [
+				{
+					"name": "Fabric Devices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/dataservice/device",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"dataservice",
+								"device"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devices Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/dataservice/device/monitor",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"dataservice",
+								"device",
+								"monitor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Device Counters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/dataservice/device/counters",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"dataservice",
+								"device",
+								"counters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Interface statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{X-XSRF-TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{vmanage}}:{{port}}/dataservice/statistics/interface",
+							"protocol": "https",
+							"host": [
+								"{{vmanage}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"dataservice",
+								"statistics",
+								"interface"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
